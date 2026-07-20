@@ -1,0 +1,3 @@
+เกม คนเซ็นทรัล
+Version: 2026-07-20-sustainability-compat-fix
+Fix: registration works with both old and new Apps Script deployments.
