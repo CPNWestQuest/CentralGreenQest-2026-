@@ -1,5 +1,5 @@
 window.CGQ_CONFIG = {
-  API_URL: "https://script.google.com/macros/s/AKfycbzAx2Y_qACK4hkdTooyT_-eYQ3UeTG5KnyqlaTZSAhaRNZdGl5ScU29HVVqM4OE9O_r/exec",
+  API_URL: "https://script.google.com/macros/s/AKfycbwPPI8ilehsLYcExPTs7jGCSc1slUsNTfhD-NVr9FJED0Vo73svFH6301Vf5mW3Mt-8/exec",
   REQUIRE_ONLINE_REPORTING: true,
   BRANCHES: [
     "A11 Residential - PHL2",
