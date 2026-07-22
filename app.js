@@ -4,7 +4,7 @@
   const CONFIG = { correctPoints: 10, wrongPenalty: 5, fallDurationMs: 4800, nextItemDelayMs: 700, questionsPerGame: 10 };
 
   const BINS = {
-    plastic_bottle: { name: "จุดทิ้งขวดพลาสติก", short: "ขวดพลาสติก" },
+    plastic_bottle: { name: "ทิ้งขวดพลาสติก", short: "ทิ้งขวดพลาสติก" },
     food: { name: "ขยะเศษอาหาร", short: "เศษอาหาร" },
     glass: { name: "ขยะรีไซเคิล ขวดแก้ว", short: "ขวดแก้ว" },
     cans: { name: "ขยะรีไซเคิล กระป๋อง", short: "กระป๋อง" },
@@ -48,6 +48,8 @@
   const surnameInput = $("#surname");
   const employeeIdInput = $("#employeeId");
   const branchInput = $("#branch");
+  const otherBranchField = $("#otherBranchField");
+  const otherBranchInput = $("#otherBranch");
   const phoneInput = $("#phone");
   const dataConsentInput = $("#dataConsent");
   const registerButton = $("#registerButton");
@@ -136,7 +138,20 @@
   function populateBranches() {
     (Array.isArray(REPORT_CONFIG.BRANCHES) ? REPORT_CONFIG.BRANCHES : []).forEach(branch => { const option = document.createElement("option"); option.value = branch; option.textContent = branch; branchInput.appendChild(option); });
   }
+
+  function updateOtherBranchField() {
+    const isOtherBranch = branchInput.value === "อื่น ๆ";
+    otherBranchField.classList.toggle("hidden", !isOtherBranch);
+    otherBranchInput.required = isOtherBranch;
+
+    if (!isOtherBranch) {
+      otherBranchInput.value = "";
+    }
+  }
+
   populateBranches();
+  updateOtherBranchField();
+  branchInput.addEventListener("change", updateOtherBranchField);
   phoneInput.addEventListener("input", () => { phoneInput.value = sanitizePhone(phoneInput.value); });
 
   registrationForm.addEventListener("submit", async event => {
@@ -145,15 +160,25 @@
     const surnameValue = surnameInput.value.trim();
     const employeeId = employeeIdInput.value.trim();
     const selectedBranch = branchInput.value;
+    const customBranch = otherBranchInput.value.trim();
+    const branchForReport =
+      selectedBranch === "อื่น ๆ"
+        ? customBranch
+        : selectedBranch;
     const phone = sanitizePhone(phoneInput.value);
     if (!firstNameValue) { registerError.textContent = "กรุณากรอกชื่อ"; firstNameInput.focus(); return; }
     if (!surnameValue) { registerError.textContent = "กรุณากรอกนามสกุล"; surnameInput.focus(); return; }
     if (!employeeId) { registerError.textContent = "กรุณากรอกรหัสพนักงาน"; employeeIdInput.focus(); return; }
     if (!selectedBranch) { registerError.textContent = "กรุณาเลือกรหัสสาขา"; branchInput.focus(); return; }
+    if (selectedBranch === "อื่น ๆ" && !customBranch) {
+      registerError.textContent = "กรุณาระบุรหัสสาขาหรือชื่อสาขาอื่น ๆ";
+      otherBranchInput.focus();
+      return;
+    }
     if (phone.length < 9 || phone.length > 10) { registerError.textContent = "กรุณากรอกเบอร์โทรศัพท์ 9-10 หลัก"; phoneInput.focus(); return; }
     if (!dataConsentInput.checked) { registerError.textContent = "กรุณายืนยันความยินยอมในการเก็บข้อมูล"; dataConsentInput.focus(); return; }
     registerButton.disabled = true; registerButton.textContent = "กำลังลงทะเบียน...";
-    const participantData = { firstName: firstNameValue, surname: surnameValue, employeeId, branch: selectedBranch, phone };
+    const participantData = { firstName: firstNameValue, surname: surnameValue, employeeId, branch: branchForReport, phone };
     // ส่งค่าภายในเพื่อให้ทำงานร่วมกับ Apps Script เวอร์ชันเก่าได้
     // แต่ไม่มีช่อง Sustainability Idea แสดงบนหน้าลงทะเบียน
     const registrationPayload = {
@@ -169,7 +194,15 @@
     finally { registerButton.disabled = false; registerButton.textContent = "ลงทะเบียนและเริ่มเล่น"; }
   });
 
-  $("#changePlayerButton").addEventListener("click", () => { stopAllGames(); sessionStorage.removeItem("central_people_player_session"); state.player = null; registrationForm.reset(); registerError.textContent = ""; showScreen("registration"); });
+  $("#changePlayerButton").addEventListener("click", () => {
+    stopAllGames();
+    sessionStorage.removeItem("central_people_player_session");
+    state.player = null;
+    registrationForm.reset();
+    updateOtherBranchField();
+    registerError.textContent = "";
+    showScreen("registration");
+  });
   $("#howToPlayButton").addEventListener("click", () => showScreen("help"));
   $("#closeHelpButton").addEventListener("click", () => showScreen("menu"));
   $("#openFallGameButton").addEventListener("click", () => openGameIntro("fall"));

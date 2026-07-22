@@ -1,5 +1,5 @@
 window.CGQ_CONFIG = {
-  API_URL: "https://script.google.com/macros/s/AKfycbzNDdg43-BZDkfHcxZRIwF5Gi1UnoUJwdwZOZIt5OPD_veoXQ2ycz5k0KWuwMIFKiH7/exec",
+  API_URL: "https://script.google.com/macros/s/AKfycbzAx2Y_qACK4hkdTooyT_-eYQ3UeTG5KnyqlaTZSAhaRNZdGl5ScU29HVVqM4OE9O_r/exec",
   REQUIRE_ONLINE_REPORTING: true,
   BRANCHES: [
     "A11 Residential - PHL2",
@@ -81,6 +81,7 @@ window.CGQ_CONFIG = {
     "THR Market Place ThepRak",
     "UBN Central Ubon",
     "UDN Central Udon",
-    "UHG Unilever House Grand Rama 9"
+    "UHG Unilever House Grand Rama 9",
+    "อื่น ๆ"
   ]
 };

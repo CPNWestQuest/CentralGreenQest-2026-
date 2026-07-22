@@ -315,7 +315,8 @@ textarea:focus {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
 }
 
 .mode-overlay {
@@ -546,7 +547,8 @@ textarea:focus {
   border: 5px solid rgba(255, 255, 255, 0.92);
   border-radius: 23px;
   background: white;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
 }
 
 .falling-item span {
@@ -634,7 +636,7 @@ textarea:focus {
   overflow: hidden;
   width: 100%;
   margin-top: -2px;
-  font-size: clamp(0.62rem, 2.4vw, 0.8rem);
+  font-size: clamp(0.7rem, 2.6vw, 0.9rem);
   font-weight: 900;
   text-align: center;
   text-overflow: ellipsis;
@@ -689,6 +691,15 @@ textarea:focus {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-6px); }
   75% { transform: translateX(6px); }
+}
+
+
+
+/* Make the plastic bottle bin match the size of the other bins */
+.bin-button[data-bin="plastic_bottle"] img {
+  width: auto;
+  max-width: 54%;
+  max-height: 84px;
 }
 
 /* Game 2 */
@@ -865,6 +876,11 @@ textarea:focus {
     min-height: 126px;
   }
 
+  .bin-button[data-bin="plastic_bottle"] img {
+    max-width: 52%;
+    max-height: 70px;
+  }
+
   .bin-button img {
     max-height: 92px;
   }
@@ -927,7 +943,7 @@ textarea:focus {
 }
 
 
-/* Final revision: เกม คนเซ็นทรัล */
+/* Final revision: เกมแยกขยะ คนเซ็นทรัล */
 .registration-panel select { font-size: 0.86rem; }
 
 .intro-screen {
@@ -965,14 +981,16 @@ textarea:focus {
 .mini-bin-grid img { height: 90px; }
 .mini-bin-grid b { font-size: .6rem; text-align: center; }
 
-.bins.eight-bins { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(88px, auto); gap: 4px; min-height: 190px; }
-.eight-bins .bin-button { min-height: 88px; height: auto; padding: 2px 2px 4px; border-radius: 12px; }
-.eight-bins .bin-button img { max-height: 71px; }
-.eight-bins .bin-button span { margin-top: 0; font-size: clamp(.56rem, 2.1vw, .76rem); line-height: 1.08; text-overflow: clip; white-space: normal; }
+.bins.eight-bins { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(112px, auto); gap: 8px; min-height: 248px; }
+.eight-bins .bin-button { min-height: 112px; height: auto; padding: 5px 4px 8px; border-radius: 16px; }
+.eight-bins .bin-button img { max-height: 80px; }
+.eight-bins .bin-button span { margin-top: 3px; font-size: clamp(.78rem, 2.8vw, 1rem); line-height: 1.15; text-overflow: clip; white-space: normal; }
 .game-screen { grid-template-rows: auto auto minmax(150px,1fr) auto auto; }
 .quiz-screen { grid-template-rows: auto auto minmax(0,1fr) auto; }
-.quiz-item-card { width: min(68%, 255px); }
-.quiz-bins { min-height: 190px; }
+.quiz-content { align-content: start; padding: 4px 12px 2px; }
+.quiz-prompt { margin-bottom: 4px; font-size: clamp(1.02rem, 4.2vw, 1.32rem); }
+.quiz-item-card { width: min(60%, 228px); }
+.quiz-bins { min-height: 248px; margin-top: 2px; }
 
 .result-fraction-wrap { display: flex; justify-content: center; align-items: flex-end; gap: 9px; margin: 10px 0 12px; }
 .result-fraction-wrap strong { color: var(--dark-green); font-size: clamp(3rem, 15vw, 4.7rem); line-height: .9; }
@@ -984,8 +1002,20 @@ textarea:focus {
   .intro-bin-grid img { height: 65px; }
   .intro-description { font-size: .88rem; }
   .intro-start-button { min-height: 55px; font-size: 1.18rem; }
-  .bins.eight-bins { min-height: 158px; grid-auto-rows: minmax(73px, auto); }
-  .eight-bins .bin-button { min-height: 73px; }
-  .eight-bins .bin-button img { max-height: 57px; }
-  .quiz-item-card { width: min(56%, 205px); }
+  .bins.eight-bins { min-height: 212px; grid-auto-rows: minmax(96px, auto); gap: 6px; }
+  .eight-bins .bin-button { min-height: 96px; }
+  .eight-bins .bin-button img { max-height: 68px; }
+  .eight-bins .bin-button span { font-size: clamp(.72rem, 2.55vw, .92rem); }
+  .quiz-content { padding-top: 2px; }
+  .quiz-item-card { width: min(52%, 190px); }
+  .quiz-bins { min-height: 212px; }
+}
+
+
+/* Keep the plastic-bottle bin artwork visually equal to the others in preview grids */
+.intro-bin-grid div:first-child img,
+.mini-bin-grid div:first-child img {
+  width: auto;
+  max-width: 54%;
+  margin-inline: auto;
 }
